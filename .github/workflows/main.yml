@@ -16,7 +16,9 @@ jobs:
       with:
           manifests: |
             argo-ha/install.yaml
+          namespace: argocd
     - uses: Azure/k8s-deploy@v5
       with:
           manifests: |
             argo-ha/argocd-application.yaml
+          namespace: argocd
