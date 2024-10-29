@@ -5,5 +5,18 @@ on:
       - main
 jobs:
   apply:
-    runs-on: 
-      
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: azure/k8s-set-context@v4
+      with:
+        method: kubeconfig
+        kubeconfig: ${{ secrets.K8S_CONFIG }}
+    - uses: Azure/k8s-deploy@v5
+      with:
+          manifests: |
+            argo-ha/install.yaml
+    - uses: Azure/k8s-deploy@v5
+      with:
+          manifests: |
+            argo-ha/argocd-application.yaml
