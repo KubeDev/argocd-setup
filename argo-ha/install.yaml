@@ -1,7 +1,6 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  creationTimestamp: null
   name: argocd
 ---
 # This is an auto-generated file. DO NOT EDIT
@@ -20935,6 +20934,7 @@ spec:
     port: 443
     protocol: TCP
     targetPort: 8080
+  type: LoadBalancer
   selector:
     app.kubernetes.io/name: argocd-server
 ---
