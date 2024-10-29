@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/fabricioveronez/argocd-setup.git
+    targetRevision: HEAD  
+    path: argo-ha  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy: # Politicas de sincronização
+    syncOptions:
+    - CreateNamespace=true # Cria o namespace, caso não exista
+    automated: # Configurações referente a automação da sincronização
+      selfHeal: true # Aplica as configurações caso tenha alteração no repositório a cada 3 min
+      prune: true # Remove elementos na sincronização
