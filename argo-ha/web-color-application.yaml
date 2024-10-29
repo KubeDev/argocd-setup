@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webcolor
+  namespace: argocd
+spec:
+  project: default # Qual projeto a aplicação pertence, cada aplicação deve pertencer a um projeto.
+  
+  source: # Informações referentes ao repositório git
+    repoURL: https://github.com/fabricioveronez/k8s-web-color-page.git
+    targetRevision: HEAD
+    path: k8s # Diretório no repositório onde os manifestos se encontram
+  destination: # Informações referentes ao cluster de destino
+    server: https://kubernetes.default.svc
+    namespace: webcolor
+
+  syncPolicy: # Politicas de sincronização
+    syncOptions: 
+    - CreateNamespace=true # Cria o namespace, caso não exista
+
+    automated: # Configurações referente a automação da sincronização
+      selfHeal: true # Aplica as configurações caso tenha alteração no repositório a cada 3 min
+      prune: true # Remove elementos na sincronização
